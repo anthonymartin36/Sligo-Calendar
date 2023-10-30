@@ -1,33 +1,35 @@
 {
-    "name": "Calendar-project",
+    "name": "sligo-calendar",
     "type": "module",
     "version": "0.2.0",
     "description": "Boilerplate for Calendar project",
     "main": "server/index.js",
     "scripts": {
-      "start": "node server/index.js",
-      "dev": "node --watch server/index.js",
-      "test": "vitest"
+        "start": "node server/index.js",
+        "dev": "node --watch server/index.js",
+        "test": "vitest"
     },
     "repository": {
-      "type": "git",
-      "url": "git+"
+        "type": "git",
+        "url": "git+"
     },
     "keywords": [
-      "Calendar",
-      "boilerplate"
+        "Calendar",
+        "boilerplate"
     ],
     "author": "The Author of this project",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/anthonymartin36/Sligo-Calendar/issues"
+        "url": "https://github.com/anthonymartin36/Sligo-Calendar/issues"
     },
     "homepage": "https://github.com/anthonymartin36/Sligo-Calendar#readme",
     "dependencies": {
-      "express": "^4.17.2",
-      "express-handlebars": "^6.0.2"
+        "config.json": "^0.0.4",
+        "express": "^4.17.2",
+        "express-handlebars": "^6.0.2",
+        "promises": "^0.2.5"
     },
     "devDependencies": {
-      "vitest": "^0.34.4"
+        "vitest": "^0.34.4"
     }
-  }
+}
