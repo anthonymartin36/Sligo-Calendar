@@ -1,4 +1,35 @@
-image {  
-    max-width: 30%;  
-    height: auto;  
-    }  
+body {
+    background-color: #f8edc5;
+    color: #0a1520;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 3%;
+    margin-right:4%;
+    border: 1px;
+    border-style: solid;
+    padding-right: 2%;
+    padding-left: 3%;
+}
+
+div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+CalendarImg, img {
+    align-items: left;
+    width: 400px;
+    height: 300px;
+    object-fit: contain;
+}
+
+CalendarBoard {
+    align-items: right;
+    width: 0px;
+}
+day {
+    height: 25px;
+    width: 25px;
+    border: 1px;
+    border-style: solid;
+    background: #FFFFFF,
+}
