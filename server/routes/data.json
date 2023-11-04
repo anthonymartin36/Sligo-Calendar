@@ -213,7 +213,7 @@
         {
             "id": 10,
             "month": "November",
-            "days": 31,
+            "days": 30,
             "Image": {
                 "name": "Sligo Town and the Garavogue River",
                 "description": "In Irish, Sligo translates as 'bay of the shells' and this county situated by Sligo Bay in the north west of Ireland, is famed for its archaeological finds, its evocative landmarks and their association with the Irish poet W.B. Yeats . The Garavogue is a small river that originates from Lough Gill. Its name is derived from the Irish “garbh óg” meaning “young rough”.",
@@ -222,12 +222,12 @@
             },
             "notes": [
                 {
-                    "day": 0,
-                    "notes": ""
+                    "day": 17,
+                    "notes": "Canterbury Anniversary Day"
                 },
                 {
-                    "day": 0,
-                    "notes": ""
+                    "day": 27,
+                    "notes": "Chatham Islands Anniversary Day"
                 }
             ]
         },
@@ -243,12 +243,12 @@
             },
             "notes": [
                 {
-                    "day": 0,
-                    "notes": ""
+                    "day": 17,
+                    "notes": "Canterbury Anniversary Day"
                 },
                 {
-                    "day": 0,
-                    "notes": ""
+                    "day": 27,
+                    "notes": "Chatham Islands Anniversary Day"
                 }
             ]
         }
