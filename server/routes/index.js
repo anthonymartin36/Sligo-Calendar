@@ -28,25 +28,24 @@ router.get('/', async (req, res) => {
   // console.log('File source : ' + file)
   const data = await awaitingReadFile(file)
   //read in the data object
-  let thisMonth = data.Calendar.find(
-    (thisMonth) => thisMonth.id == today.getMonth()
-  )
+  let thisMonth = data.Calendar.find( (thisMonth) => thisMonth.id == today.getMonth()  )
+  // Get current Date
   currentDate = Object.assign(
     { cTime: today.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1') },
     currentDate
   )
-
+  // amend the object to contain each Calendar day of the Month
   // Create an Object  that has an object with in it for every day of the month
 
-  // amend the object to contain each Calendar day of the Month
   const calendarDays = calendarDayCalc(thisMonth)
   //console.log(calendarDays)
 
   let viewData = {
     ...currentDate,
     ...thisMonth,
-    //...calendarDays,
+    ...calendarDays,
   }
+  console.log(viewData)
   res.render('index', viewData)
 })
 
@@ -63,7 +62,7 @@ async function awaitingReadFile(file) {
 }
 
 function calendarDayCalc(thisMonth) {
-  const calendarDays = []
+  const calendarDays =  []
   const notesInDay = thisMonth.notes.filter((note) => note.day != '')
   //console.log(thisMonth)
   for (let i = 1; i < thisMonth.days + 1; i++) {
@@ -84,7 +83,7 @@ function calendarDayCalc(thisMonth) {
     }
   }
   console.log(calendarDays)
-  return calendarDays
+  return {calendarDays: calendarDays}
 }
 
 function getWeekDay(weekDay){
@@ -93,9 +92,7 @@ function getWeekDay(weekDay){
   m = date.getMonth()
   var firstDay = new Date(y, m, weekDay)
   //console.log(firstDay)
-  //firstDay.getDay()
-
-  return firstDay
+  return firstDay.getDay()
 }
 
 export default router
