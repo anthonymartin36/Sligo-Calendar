@@ -12,8 +12,7 @@ body {
     flex-wrap: wrap;
 }
 
-
-CalendarImg, img {
+.CalendarImg, img {
     align-items: left;
     width: 400px;
     height: 300px;
@@ -22,19 +21,24 @@ CalendarImg, img {
 
 .calendarBoard {
     background-color:red;
-    text-align: center;
     border: 1px solid;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 100%;
 }
 div.day {
-    height: 50px;
-    width: 90px;
+    
     border: 1px solid;
     background-color: #8eb9ee;
+    text-align: center;
     font-weight: bold;
+    flex: 1 0 13.28%;
+
 }
 div.calendarDay {
     height: 50px;
     width: 90px;
     border: 1px solid #000000;
     background-color: #ffffff;
+    text-align: center;
 }

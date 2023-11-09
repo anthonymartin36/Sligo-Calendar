@@ -1,5 +1,4 @@
 import express from 'express'
-import { Console } from 'node:console'
 
 import fs from 'node:fs/promises'
 //const fs = require('fs')
@@ -36,16 +35,14 @@ router.get('/', async (req, res) => {
   )
   // amend the object to contain each Calendar day of the Month
   // Create an Object  that has an object with in it for every day of the month
-
   const calendarDays = calendarDayCalc(thisMonth)
   //console.log(calendarDays)
-
   let viewData = {
     ...currentDate,
     ...thisMonth,
     ...calendarDays,
   }
-  console.log(viewData)
+  //console.log(viewData)
   res.render('index', viewData)
 })
 
@@ -65,20 +62,27 @@ function calendarDayCalc(thisMonth) {
   const calendarDays =  []
   const notesInDay = thisMonth.notes.filter((note) => note.day != '')
   //console.log(thisMonth)
+  let k = getFirstDays() // Trying to establish 0 - 6 of week proceeding start of Month
+  let weekDay = {}
+  while(k > 0){
+    calendarDays.push({weekday: getPreviousDays(k)})
+    console.log("k: "+ k)
+    --k
+  } 
   for (let i = 1; i < thisMonth.days + 1; i++) {
     // loop through each day in month
     for (let j = 0; j < notesInDay.length; j++) {
       // loop through the notes for this month from Data Object, via day in note
       if (notesInDay[j].day == i) {
         // if there is a note add it to the array for that day
-        let weekDay = Object.assign(notesInDay[j], {weekday: getWeekDay(i + 1)})
+        weekDay = Object.assign(notesInDay[j], {weekday: getWeekDay(i + 1)})
+        // Get the days of the previous week 0 - 6 days - if needed 
         calendarDays.push(weekDay)
       }
     }
     if (calendarDays[i - 1] == null) {
       // ensure on start on double up(i starts and 1)
       let weekDay = { day: i, weekday: getWeekDay(i+1) }
-      //calendarDays.push(day)
       calendarDays.push(weekDay)
     }
   }
@@ -90,9 +94,25 @@ function getWeekDay(weekDay){
   var date = new Date(),
   y = date.getFullYear(),
   m = date.getMonth()
-  var firstDay = new Date(y, m, weekDay)
-  //console.log(firstDay)
-  return firstDay.getDay()
+  var firstDayOfMonth = new Date(y, m, weekDay)
+  //console.log("get Week Day" + firstDayOfMonth)
+  return firstDayOfMonth.getDay()
 }
 
+function getFirstDays(){
+  const date = new Date(),// get date
+  y = date.getFullYear(), // get year
+  m = date.getMonth()//get month
+  const firstDay = new Date() // get the First day of Month
+  console.log("get First Month " + firstDay.getDay())
+  return  firstDay.getDay()
+}
+
+function getPreviousDays(prevDays){
+  const date = new Date(),// get date
+  y = date.getFullYear(), // get year
+  m = date.getMonth() -1 //get month
+  const lastDayOfMonth = new Date(y, m, prevDays) // get the First day of Month
+  return lastDayOfMonth.getDay()
+}
 export default router
