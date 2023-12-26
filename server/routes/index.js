@@ -64,10 +64,11 @@ function calendarDayCalc(thisMonth) {
   //console.log(thisMonth)
   let k = getFirstDays() // Trying to establish 0 - 6 of week proceeding start of Month
   let weekDay = {}
-  while(k > 0){
-    calendarDays.push({weekday: getPreviousDays(k)})
-    console.log("k: "+ k)
-    --k
+  let i = 1
+  while(k > i){
+    calendarDays.push({day: i, weekday: getWeekDay(i)})
+    console.log("k: "+ k + " i: " +i)
+    ++i
   } 
   for (let i = 1; i < thisMonth.days + 1; i++) {
     // loop through each day in month
