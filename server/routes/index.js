@@ -61,59 +61,80 @@ async function awaitingReadFile(file) {
 function calendarDayCalc(thisMonth) {
   const calendarDays =  []
   const notesInDay = thisMonth.notes.filter((note) => note.day != '')
-  //console.log(thisMonth)
-  let k = getFirstDays() // Trying to establish 0 - 6 of week proceeding start of Month
+  console.log(notesInDay)
+  let k = getFirstDay() - 1// Trying to establish 0 - 6 of week proceeding start of Month
   let weekDay = {}
-  let i = 1
-  while(k > i){
-    calendarDays.push({day: i, weekday: getWeekDay(i)})
-    console.log("k: "+ k + " i: " +i)
-    ++i
-  } 
-  for (let i = 1; i < thisMonth.days + 1; i++) {
+  //console.log("K: " + k)
+  while(k >= 0) {
+    let previousDay = {day: getPreviousDays(k), weekday: k}
+    calendarDays.push(previousDay)
+    --k
+  }
+  
+  for (let i = 1; i <= thisMonth.days; ++i) {
     // loop through each day in month
     for (let j = 0; j < notesInDay.length; j++) {
       // loop through the notes for this month from Data Object, via day in note
       if (notesInDay[j].day == i) {
         // if there is a note add it to the array for that day
-        weekDay = Object.assign(notesInDay[j], {weekday: getWeekDay(i + 1)})
+        weekDay = Object.assign(notesInDay[j], {weekday: getWeekDay(i)})
         // Get the days of the previous week 0 - 6 days - if needed 
         calendarDays.push(weekDay)
       }
+      // else {
+      //   let weekDay = { day: i, weekday: getWeekDay(i) }
+      //   calendarDays.push(weekDay)
+      // }
     }
-    if (calendarDays[i - 1] == null) {
+
+    let r = i //-1
+    if (calendarDays[r] == null) {
       // ensure on start on double up(i starts and 1)
-      let weekDay = { day: i, weekday: getWeekDay(i+1) }
+      let weekDay = { day: i, weekday: getWeekDay(i) }
       calendarDays.push(weekDay)
     }
+    if(i == 3){
+      console.log("i = 3")
+    }
+  }
+  let l = 1
+  while(getFollowingDays(l) < 7 && getFollowingDays(l) != 0){
+    let followingDays = { day: l, weekday: getFollowingDays(l)}
+    calendarDays.push(followingDays)
+    ++l
   }
   console.log(calendarDays)
   return {calendarDays: calendarDays}
 }
 
-function getWeekDay(weekDay){
-  var date = new Date(),
-  y = date.getFullYear(),
-  m = date.getMonth()
-  var firstDayOfMonth = new Date(y, m, weekDay)
-  //console.log("get Week Day" + firstDayOfMonth)
-  return firstDayOfMonth.getDay()
+function getWeekDay(day){
+  var date = new Date()
+  var weekDay = new Date(date.getFullYear(), date.getMonth(), day)
+  //console.log("get Week Day " + weekDay.getDay())
+  return weekDay.getDay()
 }
 
-function getFirstDays(){
-  const date = new Date(),// get date
-  y = date.getFullYear(), // get year
-  m = date.getMonth()//get month
-  const firstDay = new Date() // get the First day of Month
-  console.log("get First Month " + firstDay.getDay())
+function getFirstDay(){
+  const date = new Date()// get date
+  const firstDay = new Date(date.getFullYear(), date.getMonth(), 1) // get the First day of Month
+  //console.log("get the weekday of the 1st of the Month " + firstDay.getDay())
   return  firstDay.getDay()
 }
 
 function getPreviousDays(prevDays){
-  const date = new Date(),// get date
-  y = date.getFullYear(), // get year
-  m = date.getMonth() -1 //get month
-  const lastDayOfMonth = new Date(y, m, prevDays) // get the First day of Month
-  return lastDayOfMonth.getDay()
+  const date = new Date()
+  const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 0) // get the Last day of Previous month  
+  //lastDayOfMonth.setDate(-prevDays)
+  console.log("Last Day of the month : " + lastDayOfMonth.getDay())
+  return lastDayOfMonth.getDate()
 }
+
+function getFollowingDays(followingDays){
+  const date = new Date()
+  const firstDayOfFollowingMonth = new Date(date.getFullYear(), date.getMonth() + 1, followingDays) // get the first day of the Following month  
+  //lastDayOfMonth.setDate(-prevDays)
+  //console.log("Last Day of the month : " + firstDayOfFollowingMonth.getDay() + " Date: " + firstDayOfFollowingMonth.getDate())
+  return firstDayOfFollowingMonth.getDay()
+}
+
 export default router
