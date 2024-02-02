@@ -61,18 +61,20 @@ async function awaitingReadFile(file) {
 function calendarDayCalc(thisMonth) {
   const calendarDays =  []
   const notesInDay = thisMonth.notes.filter((note) => note.day != '')
+  let note = false
   console.log(notesInDay)
   let k = getFirstDay() - 1// Trying to establish 0 - 6 of week proceeding start of Month
   let weekDay = {}
   //console.log("K: " + k)
   while(k >= 0) {
-    let previousDay = {day: getPreviousDays(k), weekday: k}
+    let previousDay = {day: getPreviousDays(k), weekday: getPrevWeekDay(getPreviousDays(k))}
     calendarDays.push(previousDay)
     --k
   }
   
   for (let i = 1; i <= thisMonth.days; ++i) {
     // loop through each day in month
+    console.log("Month Day : " + i + " weekday: " + getWeekDay(i))
     for (let j = 0; j < notesInDay.length; j++) {
       // loop through the notes for this month from Data Object, via day in note
       if (notesInDay[j].day == i) {
@@ -80,22 +82,15 @@ function calendarDayCalc(thisMonth) {
         weekDay = Object.assign(notesInDay[j], {weekday: getWeekDay(i)})
         // Get the days of the previous week 0 - 6 days - if needed 
         calendarDays.push(weekDay)
+        note = true
       }
-      // else {
-      //   let weekDay = { day: i, weekday: getWeekDay(i) }
-      //   calendarDays.push(weekDay)
-      // }
     }
-
-    let r = i //-1
-    if (calendarDays[r] == null) {
-      // ensure on start on double up(i starts and 1)
-      let weekDay = { day: i, weekday: getWeekDay(i) }
+    if (note == false) { 
+      //console.log(" weekDay.notes " + weekDay.notes)
+      weekDay = { day: i, weekday: getWeekDay(i) }
       calendarDays.push(weekDay)
     }
-    if(i == 3){
-      console.log("i = 3")
-    }
+    note = false
   }
   let l = 1
   while(getFollowingDays(l) < 7 && getFollowingDays(l) != 0){
@@ -123,10 +118,17 @@ function getFirstDay(){
 
 function getPreviousDays(prevDays){
   const date = new Date()
-  const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 0) // get the Last day of Previous month  
+  const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 0 - prevDays) // get the Last day of Previous month  
   //lastDayOfMonth.setDate(-prevDays)
-  console.log("Last Day of the month : " + lastDayOfMonth.getDay())
+  //console.log("Day of the previous month : " + lastDayOfMonth.getDay())
   return lastDayOfMonth.getDate()
+}
+
+function getPrevWeekDay(day){
+  var date = new Date()
+  var weekDay = new Date(date.getFullYear(), date.getMonth() - 1, day)
+  //console.log("get Week Day " + weekDay.getDay())
+  return weekDay.getDay()
 }
 
 function getFollowingDays(followingDays){
